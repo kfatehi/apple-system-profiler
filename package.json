@@ -1,0 +1,19 @@
+{
+  "name": "apple-system-profiler",
+  "version": "1.0.0",
+  "description": "wrapper around apple's system_profiler that parses the output",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository" :
+  { "type" : "git"
+    , "url" : "https://github.com/kfatehi/apple-system-profiler"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "plist": "^2.0.1"
+  }
+}
