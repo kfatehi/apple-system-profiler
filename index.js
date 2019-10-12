@@ -14,7 +14,7 @@ module.exports = function(opts, cb) {
   return new Promise((resolve, reject) => {
     exec(`/usr/sbin/system_profiler -xml -detailLevel ${detailLevel} ${
       dataTypes.join(' ')
-    } ${opts.timeout ? `-timeout ${opts.timeout}` : ''}`, {
+    } ${opts.timeout ? ` -timeout ${opts.timeout}` : ''}`, {
       cwd: opts.cwd,
       maxBuffer: opts.maxBuffer || Infinity
     }, function(err, stdout) {
