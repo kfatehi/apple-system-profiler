@@ -16,6 +16,13 @@ asp({
     'SPHardwareDataType',
     'SPMemoryDataType'
   ]
+  /*
+  Other options (with defaults):
+    detailLevel: 'mini', // mini|basic|full
+    cwd: undefined,
+    maxBuffer: Infinity,
+    normalize: true // Set to `false` to get raw, untransformed JSON data
+   */
 }, (err, out) => {
   if ( err ) throw err;
   console.log(out);
