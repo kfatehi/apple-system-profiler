@@ -2,6 +2,7 @@ const {exec} = require('child_process');
 const plist = require('plist');
 
 module.exports = function(opts, cb) {
+  opts = opts || {};
   const dataTypes = opts && Array.isArray(opts.dataTypes)
     ? opts.dataTypes
     : [];
@@ -13,12 +14,15 @@ module.exports = function(opts, cb) {
     }, function(err, stdout) {
       if (err) {
         if (cb) cb(err);
+        err.stdout = stdout;
         reject(err);
         return;
       }
       parse(stdout, (err, out) => {
         if ( err ) {
           if (cb) cb(err, out);
+          err.stdout = stdout;
+          err.out = out;
           reject(err);
           return;
         }
