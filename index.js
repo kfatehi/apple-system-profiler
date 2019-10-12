@@ -12,13 +12,13 @@ module.exports = function(opts, cb) {
       maxBuffer: opts.maxBuffer || Infinity
     }, function(err, stdout) {
       if (err) {
-        cb(err);
+        if (cb) cb(err);
         reject(err);
         return;
       }
       parse(stdout, (err, out) => {
         if ( err ) {
-          cb(err, out);
+          if (cb) cb(err, out);
           reject(err);
           return;
         }
