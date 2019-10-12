@@ -5,7 +5,7 @@ wrapper around apple's `system_profiler` that parses the output
 ## usage
 
 ```javascript
-var asp = require('./index.js')
+const asp = require('./index.js')
 
 // Grab graphics, hardware, and memory info
 // and parse them out as a JavaScript object
@@ -22,4 +22,4 @@ asp({
 });
 ```
 
-see test.js
+see `test.js`

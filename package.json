@@ -4,16 +4,28 @@
   "description": "wrapper around apple's system_profiler that parses the output",
   "main": "index.js",
   "scripts": {
+    "eslint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository" :
-  { "type" : "git"
-    , "url" : "https://github.com/kfatehi/apple-system-profiler"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kfatehi/apple-system-profiler"
+  },
+  "bugs": "https://github.com/kfatehi/apple-system-profiler/issues",
+  "homepage": "https://github.com/kfatehi/apple-system-profiler",
+  "engines": {
+    "node": ">=8.0.0"
   },
   "keywords": [],
-  "author": "",
+  "author": "Keyvan Fatehi",
+  "contributors": [
+    "Brett Zamir"
+  ],
   "license": "ISC",
   "dependencies": {
     "plist": "^2.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1"
   }
 }

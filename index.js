@@ -1,23 +1,39 @@
-var exec = require('child_process').exec;
-var plist = require('plist');
+const {exec} = require('child_process');
+const plist = require('plist');
 
 module.exports = function(opts, cb) {
-  var dataTypes = [];
-  if ( opts && Array.isArray(opts.dataTypes) ) {
-    dataTypes = opts.dataTypes
-  }
-  exec('/usr/sbin/system_profiler -xml -detailLevel mini '+dataTypes.join(' '), function(err, stdout) {
-    if (err) throw err;
-    parse(stdout, (err, out) => {
-      if ( err ) throw err;
-      cb(null, out);
-    })
+  const dataTypes = opts && Array.isArray(opts.dataTypes)
+    ? opts.dataTypes
+    : [];
+
+  return new Promise((resolve, reject) => {
+    exec('/usr/sbin/system_profiler -xml -detailLevel mini ' + dataTypes.join(' '), {
+      cwd: opts.cwd,
+      maxBuffer: opts.maxBuffer || Infinity
+    }, function(err, stdout) {
+      if (err) {
+        cb(err);
+        reject(err);
+        return;
+      }
+      parse(stdout, (err, out) => {
+        if ( err ) {
+          cb(err, out);
+          reject(err);
+          return;
+        }
+        if (cb) {
+          cb(null, out);
+        }
+        resolve(out);
+      })
+    });
   });
 }
 
 function parse(buf, cb) {
-  var data = plist.parse(buf.toString());
-  var out = data.reduce(function(acc, sec) {
+  const data = plist.parse(buf.toString());
+  const out = data.reduce(function(acc, sec) {
     return acc.concat({
       name: sec._dataType,
       items: sec._items[0],
