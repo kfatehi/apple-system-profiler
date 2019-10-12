@@ -25,4 +25,17 @@ asp({
   } catch (err) {
     console.log('Error', err);
   }
+
+  try {
+    const out = await asp({
+      normalize: false,
+      detailLevel: 'full', // mini|basic|full
+      dataTypes: [
+        'SPFontsDataType'
+      ]
+    });
+    console.log(out);
+  } catch (err) {
+    console.log('Error', err);
+  }
 })();

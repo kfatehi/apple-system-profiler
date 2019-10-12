@@ -7,8 +7,14 @@ module.exports = function(opts, cb) {
     ? opts.dataTypes
     : [];
 
+  const detailLevel = ['mini', 'basic', 'full'].includes(opts.detailLevel)
+    ? opts.detailLevel
+    : 'mini';
+
   return new Promise((resolve, reject) => {
-    exec('/usr/sbin/system_profiler -xml -detailLevel mini ' + dataTypes.join(' '), {
+    exec(`/usr/sbin/system_profiler -xml -detailLevel ${detailLevel} ${
+      dataTypes.join(' ')
+    } ${opts.timeout ? `-timeout ${opts.timeout}` : ''}`, {
       cwd: opts.cwd,
       maxBuffer: opts.maxBuffer || Infinity
     }, function(err, stdout) {
@@ -18,7 +24,7 @@ module.exports = function(opts, cb) {
         reject(err);
         return;
       }
-      parse(stdout, (err, out) => {
+      parse(stdout, opts.normalize !== false, (err, out) => {
         if ( err ) {
           if (cb) cb(err, out);
           err.stdout = stdout;
@@ -33,16 +39,18 @@ module.exports = function(opts, cb) {
       })
     });
   });
-}
+};
 
-function parse(buf, cb) {
+function parse(buf, normalize, cb) {
   const data = plist.parse(buf.toString());
-  const out = data.reduce(function(acc, sec) {
-    return acc.concat({
-      name: sec._dataType,
-      items: sec._items[0],
-      properties: sec._properties
-    });
-  }, []);
+  const out = normalize
+    ? data.reduce(function(acc, sec) {
+      return acc.concat({
+        name: sec._dataType,
+        items: sec._items[0],
+        properties: sec._properties
+      });
+    }, [])
+    : data;
   cb(null, out);
 }
