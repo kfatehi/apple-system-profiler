@@ -5,7 +5,7 @@ wrapper around apple's `system_profiler` that parses the output
 ## usage
 
 ```javascript
-const asp = require('./index.js')
+const {systemProfiler: asp} = require('./index.js')
 
 // Grab graphics, hardware, and memory info
 // and parse them out as a JavaScript object
@@ -27,6 +27,13 @@ asp({
   if ( err ) throw err;
   console.log(out);
 });
+```
+
+There is also `listDataTypes` method which resolves to the system's available
+`dataTypes`.
+
+```js
+const jsonArray = await listDataTypes();
 ```
 
 see `test.js`
