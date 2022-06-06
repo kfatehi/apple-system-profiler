@@ -1,4 +1,7 @@
-const asp = require('./index.js');
+const {
+  systemProfiler: asp,
+  listDataTypes
+} = require('./index.js');
 
 // Grab graphics, hardware, and memory info
 // and parse them out as a JavaScript object
@@ -24,6 +27,12 @@ asp({
     console.log(out);
   } catch (err) {
     console.log('Error', err);
+  }
+  try {
+    const json = await listDataTypes();
+    console.log('json', json);
+  } catch (err) {
+    console.log('Err', err.stdout);
   }
 
   try {

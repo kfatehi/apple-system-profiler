@@ -1,7 +1,7 @@
 const {exec} = require('child_process');
 const plist = require('plist');
 
-module.exports = function(opts, cb) {
+exports.systemProfiler = function(opts, cb) {
   opts = opts || {};
   const dataTypes = opts && Array.isArray(opts.dataTypes)
     ? opts.dataTypes
@@ -54,3 +54,25 @@ function parse(buf, normalize, cb) {
     : data;
   cb(null, out);
 }
+
+exports.listDataTypes = function (opts, cb) {
+  opts = opts || {};
+  return new Promise((resolve, reject) => {
+    exec(`/usr/sbin/system_profiler -listDataTypes`, {
+      cwd: opts.cwd,
+      maxBuffer: opts.maxBuffer || Infinity
+    }, function(err, stdout) {
+      if (err) {
+        cb(err);
+        err.stdout = stdout;
+        reject(err);
+        return;
+      }
+      const json = stdout.trim().split('\n').slice(1);
+      if (cb) {
+        cb(null, json);
+      }
+      resolve(json);
+    });
+  });
+};
