@@ -1,6 +1,6 @@
 {
   "name": "apple-system-profiler",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "wrapper around apple's system_profiler that parses the output",
   "main": "index.js",
   "scripts": {
